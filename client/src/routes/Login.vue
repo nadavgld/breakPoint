@@ -1,0 +1,87 @@
+<template>
+  <div class="login">
+    <img alt="Vue logo" src="../assets/logo.png">
+    <v-form ref="form" class="break-form" v-model="valid" lazy-validation>
+      <div>
+        <v-text-field
+          v-model="username"
+          :counter="20"
+          label="Username"
+          placeholder="Your cool username!"
+          required
+        ></v-text-field>
+        <div class="red--text left" v-if="err.username">{{err.username}}</div>
+      </div>
+      <div>
+        <v-text-field
+          v-model="password"
+          :counter="20"
+          label="Password"
+          placeholder="Your **** password!"
+          required
+        ></v-text-field>
+        <div class="red--text left" v-if="err.password">{{err.password}}</div>
+      </div>
+      <v-btn class="mt login-button" color="red" @click="login">Login</v-btn>
+    </v-form>
+  </div>
+</template>
+
+<script>
+// @ is an alias to /src
+
+export default {
+  data() {
+    return {
+      name: "Login",
+      username: "",
+      password: "",
+      err: ""
+    };
+  },
+  methods: {
+    login() {
+      if (Math.random() > 0.5) {
+        this.err = "";
+
+        return true;
+      }
+
+      this.err.username = "Username already exists";
+    }
+  },
+  name: "home",
+  components: {}
+};
+</script>
+
+<style scoped>
+.login {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.login-button{
+  width: 50%;
+  margin: auto;
+}
+
+.left {
+  text-align: left;
+}
+
+.mt {
+  margin-top: 30px !important;
+}
+
+.break-form {
+  margin: auto;
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+}
+</style>
+
