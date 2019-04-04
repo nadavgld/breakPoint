@@ -11,3 +11,7 @@ export default (io) => {
 export const addToRoom = (email, roomId) => {
   connectedUsers[email].join(roomId);
 }
+
+export const removeFromRoom = (email, roomId) => {
+  connectedUsers[email].leave(roomId);
+}
