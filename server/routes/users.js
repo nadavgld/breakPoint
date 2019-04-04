@@ -1,4 +1,7 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
+const config = require('config');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 const User = require('../models/User');
 
@@ -19,23 +22,47 @@ router.post('/', (req, res) => {
 
     // Simple validation
     if (!name || !email || !password){
-        return res.status(400).json({ 'msg': 'Please enter all fields'});
+        return res.status(400).json({ msg: 'Please enter all fields'});
     }
 
     // Check for existing user
     User.findOne({ email })
         .then(user => {
+            if (user) return res.status(400).json({ msg: 'User already exists.'});
 
-        })
+            const newUser = new User({
+                name,
+                email,
+                password
+            });
 
-    // const newUser = new User({
-    //     name: req.body.name,
-    //     email: req.body.email,
-    //     password:
-    // });
-
-    newDevice.save()
-        .then(device => res.json(device));
+            // encrypt password before storing it in db
+            bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(newUser.password, salt, (err, hash) => {
+                    if (err) throw err;
+                    newUser.password = hash;
+                    newUser.save()
+                        .then(user => {
+                            jwt.sign(
+                                { id: user.id },
+                                config.get('jwtSecret'),
+                                { expiresIn: 3600 },
+                                (err, token) => {
+                                    if (err) throw err;
+                                    res.json({
+                                        token,
+                                        user : {
+                                            id: user.id,
+                                            name: user.email,
+                                            email: user.email
+                                        }
+                                    });
+                                }
+                            );
+                        });
+                });
+            });
+        });
 });
 
 // @route GET api/devices/:id
