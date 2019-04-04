@@ -8,21 +8,12 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    desc: {
+    email: {
         type: String,
-        required: false
-    },
-    zone: {
-        type: Number,
         required: true
     },
-    minPlayers: {
-        type: Number,
-        required: true,
-        default: 1
-    },
-    maxPlayers: {
-        type: Number,
+    password: {
+        type: String,
         required: true
     }
 });
