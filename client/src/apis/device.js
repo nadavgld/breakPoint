@@ -1,4 +1,6 @@
 const axios = require('axios');
+import config from '../config.js'
+
 
 export const getAllDevices = async () => {
     try {
