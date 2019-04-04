@@ -4,6 +4,7 @@ import Home from './routes/Home.vue'
 import Login from './routes/Login.vue'
 import PointPicker from './routes/PointPicker.vue'
 import Book from './routes/Book.vue'
+import PlayNow from './routes/PlayNow.vue'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/book',
       name: 'Book',
       component: Book
+    },
+    {
+      path: '/play/:pointId',
+      name: 'Play',
+      component: PlayNow
     }
   ]
 })
