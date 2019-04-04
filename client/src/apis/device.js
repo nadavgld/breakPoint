@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-export const getAllDevices => async () => {
+export const getAllDevices = async () => {
     try {
         const response = await axios.get('/api/devices');
         return JSON.parse(response.data);
@@ -8,7 +8,7 @@ export const getAllDevices => async () => {
         console.error(error);
       }
 }
-export const getDeviceById => async (id) => {
+export const getDeviceById = async (id) => {
     try {
         const response = await axios.get(`/api/devices/${id}`);
         return JSON.parse(response.data);
