@@ -1,0 +1,14 @@
+{
+  "name": "breakpoint-server",
+  "version": "1.0.0",
+  "description": "Breakpoint - office games matching application",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Breakpoint LTD",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
