@@ -5,7 +5,7 @@
         v-for="(point, index) in Points"
         :key="point.name"
         class="point"
-        @click="pickPoint(point)"
+        @click="pickPoint($event, point, index)"
       >
         <v-flex xs12>
           <v-card :color="computeColor(index)" class="white--text">
@@ -100,8 +100,15 @@ export default {
     computeColor(index) {
       return this.PointColors[index % this.PointColors.length];
     },
-    pickPoint(point) {
-      alert(`chose ${point.name}`);
+    pickPoint(event, point, index) {
+      if (point.isFree === false) {
+        var pointElement = document.getElementsByClassName("point-icon")[index];
+        pointElement.className += " occupied";
+
+        setTimeout(() => { 
+          pointElement.className = "point-icon";
+        }, 2000);
+      }
     }
   },
   components: {}
@@ -121,7 +128,7 @@ export default {
   margin: 5px auto;
 }
 
-.point:hover{
+.point:hover {
   cursor: pointer;
 }
 .points-container {
@@ -136,6 +143,33 @@ export default {
 
 .max-players {
   color: #33333380;
+}
+
+.occupied {
+  animation: shake 1s ease;
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
 }
 </style>
 

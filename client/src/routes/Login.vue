@@ -3,11 +3,26 @@
     <img alt="Vue logo" src="../assets/logo.png">
     <v-form ref="form" class="break-form" v-model="valid" lazy-validation>
       <div>
-        <v-text-field v-model="username" :counter="20" label="Username" placeholder="Your cool username!" required></v-text-field>
-        <div class="red--text left" v-if="err">{{err}}</div>
+        <v-text-field
+          v-model="username"
+          :counter="20"
+          label="Username"
+          placeholder="Your cool username!"
+          required
+        ></v-text-field>
+        <div class="red--text left" v-if="err.username">{{err.username}}</div>
       </div>
-
-      <v-btn class="mt" color="red" @click="login">Login</v-btn>
+      <div>
+        <v-text-field
+          v-model="password"
+          :counter="20"
+          label="Password"
+          placeholder="Your **** password!"
+          required
+        ></v-text-field>
+        <div class="red--text left" v-if="err.password">{{err.password}}</div>
+      </div>
+      <v-btn class="mt login-button" color="red" @click="login">Login</v-btn>
     </v-form>
   </div>
 </template>
@@ -20,6 +35,7 @@ export default {
     return {
       name: "Login",
       username: "",
+      password: "",
       err: ""
     };
   },
@@ -31,7 +47,7 @@ export default {
         return true;
       }
 
-      this.err = "Username already exists";
+      this.err.username = "Username already exists";
     }
   },
   name: "home",
@@ -46,6 +62,11 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.login-button{
+  width: 50%;
+  margin: auto;
 }
 
 .left {
