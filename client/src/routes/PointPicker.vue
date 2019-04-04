@@ -115,6 +115,15 @@ export default {
       showModal: false
     };
   },
+  
+  mounted() {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      this.$router.push({ path: `/login` });
+    }
+  },
+
   methods: {
     computeIcon(name) {
       return this.PointIcons[name];
