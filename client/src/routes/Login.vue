@@ -3,7 +3,7 @@
     <img alt="Vue logo" src="../assets/logo.png">
     <v-form ref="form" class="break-form" v-model="valid" lazy-validation>
       <div>
-        <v-text-field v-model="name" :counter="20" label="Name" required></v-text-field>
+        <v-text-field v-model="username" :counter="20" label="Username" placeholder="Your cool username!" required></v-text-field>
         <div class="red--text left" v-if="err">{{err}}</div>
       </div>
 
