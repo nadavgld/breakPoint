@@ -1,16 +1,15 @@
 <template>
   <div class="login">
     <img alt="Vue logo" src="../assets/logo.png">
-    <v-form ref="form" class="break-form" v-model="valid" lazy-validation>
+    <v-form ref="form" class="break-form" lazy-validation>
       <div>
         <v-text-field
-          v-model="username"
+          v-model="email"
           :counter="20"
-          label="Username"
-          placeholder="Your cool username!"
+          label="Email"
+          placeholder="Your cool email!"
           required
         ></v-text-field>
-        <div class="red--text left" v-if="err.username">{{err.username}}</div>
       </div>
       <div>
         <v-text-field
@@ -20,34 +19,55 @@
           placeholder="Your **** password!"
           required
         ></v-text-field>
-        <div class="red--text left" v-if="err.password">{{err.password}}</div>
+        <div class="red--text left" v-if="err">{{err}}</div>
       </div>
-      <v-btn class="mt login-button" color="red" @click="login">Login</v-btn>
+      <v-btn
+        :disabled="!email || !password"
+        class="mt login-button"
+        color="red"
+        @click="login"
+      >Login</v-btn>
     </v-form>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import { loginUser } from "@/apis/auth.js";
 
 export default {
   data() {
     return {
       name: "Login",
-      username: "",
+      email: "",
       password: "",
       err: ""
     };
   },
+
+  mounted() {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      this.$router.push({ path: `/pick` });
+    }
+  },
   methods: {
-    login() {
-      if (Math.random() > 0.5) {
-        this.err = "";
+    async login() {
+      const user = { email: this.email, password: this.password };
 
-        return true;
+      var response = await loginUser(user);
+
+      if (!response.token) {
+        this.err = response.msg;
+      } else {
+        localStorage.setItem("token", response.token);
+        localStorage.setItem("userId", response.user.id);
+        localStorage.setItem("email", response.user.email);
+        localStorage.setItem("user_name", response.user.name);
+
+        this.$router.push({ path: `/pick` });
       }
-
-      this.err.username = "Username already exists";
     }
   },
   name: "home",
@@ -64,7 +84,7 @@ export default {
   transform: translate(-50%, -50%);
 }
 
-.login-button{
+.login-button {
   width: 50%;
   margin: auto;
 }

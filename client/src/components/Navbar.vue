@@ -4,6 +4,7 @@
     <v-toolbar-title>Break Point</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
+      <v-btn flat @click="logout()">Logout</v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>
@@ -12,8 +13,13 @@
 // @ is an alias to /src
 
 export default {
-  components: {
-  }
-}
+  methods: {
+    logout() {
+      localStorage.clear();
+      this.$router.push({ path: `/login` });
+    }
+  },
+  components: {}
+};
 </script>
 

@@ -46,7 +46,12 @@
         <div class="close-button" @click="showModal = false">X</div>
         <div class="selected-point"></div>
         <div class="modal-buttons">
-          <v-btn color="green" class="playnow-button" @click="playnow(selectedPoint)">Play Now!</v-btn>
+          <v-btn
+            color="green"
+            :disabled="selectedPoint.isFree === false  "
+            class="playnow-button"
+            @click="playnow(selectedPoint)"
+          >Play Now!</v-btn>
           <v-btn color="blue" class="book-button" @click="book(selectedPoint)">Book 4 Later</v-btn>
         </div>
       </div>
@@ -118,23 +123,26 @@ export default {
       return this.PointColors[index % this.PointColors.length];
     },
     pickPoint(event, point, index) {
-      if (point.isFree === false) {
-        var pointElement = document.getElementsByClassName("point-icon")[index];
-        pointElement.className += " occupied";
+      // if (point.isFree === false) {
+      //   var pointElement = document.getElementsByClassName("point-icon")[index];
+      //   pointElement.className += " occupied";
 
-        setTimeout(() => {
-          pointElement.className = "point-icon";
-        }, 2000);
-      } else {
-        this.selectedPoint = point;
-        this.showModal = true;
-      }
-    },
-    playnow(point){
-      this.$router.push({path: '/play/' + this.selectedPoint.id})
-    },
-    book(point){
+      //   setTimeout(() => {
+      //     pointElement.className = "point-icon";
+      //   }, 2000);
+      // } else {
+      //   this.selectedPoint = point;
+      //   this.showModal = true;
+      // }
 
+      this.selectedPoint = point;
+      this.showModal = true;
+    },
+    playnow(point) {
+      this.$router.push({ path: `/play/?pointId=${this.selectedPoint.id}` });
+    },
+    book(point) {
+      this.$router.push({ path: `/book?pointId=${this.selectedPoint.id}` });
     }
   },
   components: {}
@@ -148,11 +156,11 @@ export default {
   font-size: 40px;
 }
 
-.close-button:hover{
+.close-button:hover {
   cursor: pointer;
 }
 
-.close-button{
+.close-button {
   position: absolute;
   top: 5px;
   right: 5px;
@@ -162,7 +170,7 @@ export default {
   display: contents;
 }
 
-.bold{
+.bold {
   font-weight: bolder;
 }
 
@@ -217,6 +225,7 @@ export default {
 
 .users {
   padding: 0 2px;
+  text-shadow: 1px 1px 1px #00000040;
 }
 
 .max-players {
