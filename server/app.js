@@ -6,6 +6,7 @@ const port = process.env.PORT || 5000;
 const db = config.get('mongoURI');
 
 app.use(express.json());
+app.use(require('cors'));
 
 app.use('/api/devices', require('./routes/devices'));
 app.use('/api/users', require('./routes/users'));
