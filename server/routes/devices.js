@@ -38,4 +38,24 @@ router.get('/:id', auth, (req, res) => {
         .catch(err => console.log(err));
 });
 
+// route to add user to device lobby
+router.post('/:id/lobby', auth, (req, res) => {
+    Device.findById(req.params.id)
+        .then(device => {
+            device.lobby = [...device.lobby, req.user.id];
+            device.save()
+                .then(device => res.json(device));
+        });
+});
+
+// route to remove user from device lobby
+router.delete('/:id/lobby', auth, (req, res) => {
+    Device.findById(req.params.id)
+        .then(device => {
+            device.lobby = device.lobby.filter(id => id !== req.user.id);
+            device.save()
+                .then(device => res.status(200));
+        });
+});
+
 module.exports = router;

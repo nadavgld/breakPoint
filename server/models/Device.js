@@ -20,6 +20,14 @@ const DeviceSchema = new Schema({
     maxPlayers: {
         type: Number,
         required: true
+    },
+    lobby: {
+        type: Array,
+        default: []
+    },
+    isOccupied: {
+        type: Boolean,
+        default: false
     }
 });
 
