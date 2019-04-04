@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Device = require('../models/Device');
 const auth = require('../middleware/auth');
+const socket = require('../services/socket');
 
 // @route GET api/devices
 // @desc Get All Devices
@@ -42,9 +43,12 @@ router.get('/:id', auth, (req, res) => {
 router.post('/:id/lobby', auth, (req, res) => {
     Device.findById(req.params.id)
         .then(device => {
-            device.lobby = [...device.lobby, req.user.id];
+            device.lobby = [...device.lobby, req.user.name];
             device.save()
-                .then(device => res.json(device));
+                .then(device => {
+                    socket.addToRoom(req.user.email, device.id);
+                    res.json(device)
+                });
         });
 });
 
@@ -52,9 +56,12 @@ router.post('/:id/lobby', auth, (req, res) => {
 router.delete('/:id/lobby', auth, (req, res) => {
     Device.findById(req.params.id)
         .then(device => {
-            device.lobby = device.lobby.filter(id => id !== req.user.id);
+            device.lobby = device.lobby.filter(name => name !== req.user.name);
             device.save()
-                .then(device => res.status(200));
+                .then(device => {
+                    socket.removeFromRoom(req.user.email, device.id);
+                    res.status(200)
+                });
         });
 });
 
