@@ -39,6 +39,15 @@ export default {
     };
   },
 
+  sockets: {
+    new_user_in_room: newUser => {
+      this.participants.push(newUser);
+    },
+    user_left_room: user => {
+      this.participants = this.participants.filter(p => p !== user);
+    }
+  },
+
   async mounted() {
     const token = localStorage.getItem("token");
     this.deviceId = this.$route.query.pointId;
@@ -60,7 +69,7 @@ export default {
 
     async cancelGame() {
       await cancelLobbyWaiting(this.deviceId, localStorage.getItem("token"));
-      
+
       this.$router.push({ path: `/pick` });
     }
   },
