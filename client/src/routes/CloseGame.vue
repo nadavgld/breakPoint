@@ -1,12 +1,16 @@
 <template>
   <div class="close-game-container">
     <div class="timer">{{formatedMinutes}}:{{formatedSeconds}}</div>
-    <v-btn class="white--text mt close-game-button" color="#E30921">Close Game</v-btn>
+    <v-btn
+      class="white--text mt close-game-button"
+      color="#E30921"
+      @click="closeMatches()"
+    >Back to work?</v-btn>
   </div>
 </template>
 
 <script>
-import { getmatchById } from "@/apis/match.js";
+import { getmatchById, closeMatch } from "@/apis/match.js";
 
 export default {
   data() {
@@ -60,6 +64,12 @@ export default {
     },
     getFormatedTime(number) {
       return number <= 9 ? "0" + number : number;
+    },
+
+    async closeMatches() {
+      await closeMatch(this.matchId, localStorage.getItem("token"));
+
+      this.$router.push({ path: `/pick` });
     }
   },
   name: "home",

@@ -144,6 +144,10 @@ export default {
   font-size: 40px;
 }
 
+.book-button{
+  margin-top: 48px !important;
+}
+
 .close-button:hover {
   cursor: pointer;
 }

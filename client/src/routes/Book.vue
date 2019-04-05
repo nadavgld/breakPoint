@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <div v-for="timeInterval in calculateInterval()" :key="timeInterval.time" class="point">
-      <v-flex xs12 :class="{'notFree':!timeInterval.isFree}">
-        <v-card class="black--text">
+      <v-flex xs12>
+        <v-card class="black--text" :class="{'red':!timeInterval.isFree}">
           <v-layout>
             <v-flex xs5>
               <div class="point-icon">
@@ -13,7 +13,7 @@
             <v-flex xs7>
               <v-card-title primary-title>
                 <div class="buttons">
-                  <v-btn :disabled="!timeInterval.isFree">Book</v-btn>
+                  <v-btn v-if="timeInterval.isFree" @click="book(timeInterval.time)">Book</v-btn>
                 </div>
               </v-card-title>
             </v-flex>
@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import { startGame } from "@/apis/match.js";
+
 export default {
   name: "app",
   data() {
@@ -44,6 +46,25 @@ export default {
   },
 
   methods: {
+    async book(time) {
+      const hours = parseInt(time.split(":")[0]);
+      const minutes = parseInt(time.split(":")[1]);
+
+      var date = new Date();
+      date.setHours(hours);
+      date.setMinutes(minutes);
+
+      const deviceId = this.$route.query.pointId;
+
+      const match = await startGame(
+        deviceId,
+        [localStorage.getItem('user_name')],
+        localStorage.getItem("token"),
+        date
+      );
+
+      this.$router.push({ path: `/closeGame?matchId=${match._id}` });
+    },
     calculateInterval() {
       var array = [];
       for (var i = this.minHour; i <= this.maxHour; i += this.intervalTime)
@@ -103,10 +124,6 @@ export default {
 }
 
 .buttons {
-  display: none;
-}
-
-.point:hover .buttons {
   display: block;
 }
 

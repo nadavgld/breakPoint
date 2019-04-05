@@ -54,7 +54,7 @@ export default {
 
     if (token) {
       if (this.$route.query.deviceId) {
-        this.$socket.emit("register", { email: response.user.email });
+        this.$socket.emit("register", { email: localStorage.getItem("email") });
 
         var hasJoin = await joinDeviceLobby(
           this.$route.query.deviceId,

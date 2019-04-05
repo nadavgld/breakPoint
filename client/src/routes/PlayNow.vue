@@ -15,7 +15,7 @@
         class="white--text mt start-game-button"
         color="#E30921"
         @click="startGame"
-      >Start Game</v-btn>
+      >Take a Break</v-btn>
 
       <v-btn class="white--text mt start-game-button" color="blue" @click="cancelGame">Cancel</v-btn>
     </div>
@@ -48,6 +48,9 @@ export default {
     },
     user_left_room(user) {
       this.participants = this.participants.filter(p => p !== user);
+    },
+    gameStarted(matchId) {
+      this.$router.push({ path: `/closeGame?matchId=${matchId}` });
     }
   },
 
@@ -88,6 +91,13 @@ export default {
   computed: {
     showStartGame: function() {
       var currentUser = localStorage.getItem("user_name");
+
+      if (
+        !this.participants ||
+        !this.currentDevice ||
+        this.participants.length == 0
+      )
+        return false;
 
       return (
         this.participants[0] === currentUser &&
