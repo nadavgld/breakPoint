@@ -19,6 +19,7 @@ router.get('/', (req, res) => {
 router.post('/', auth, (req, res) => {
     const newMatch = new Match({
         deviceId: req.body.deviceId,
+        time: req.body.time || Date.now(),
         players: req.body.players
     });
 
