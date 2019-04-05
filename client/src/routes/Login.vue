@@ -7,6 +7,7 @@
           v-model="email"
           :counter="20"
           label="Email"
+          color="#E30921"
           placeholder="Your cool email!"
           required
         ></v-text-field>
@@ -15,6 +16,7 @@
         <v-text-field
           type="password"
           v-model="password"
+          color="#E30921"
           :counter="20"
           label="Password"
           placeholder="Your **** password!"
@@ -46,11 +48,18 @@ export default {
     };
   },
 
-  mounted() {
+  async mounted() {
     const token = localStorage.getItem("token");
 
     if (token) {
       if (this.$route.query.deviceId) {
+        this.$socket.emit("register", { email: response.user.email });
+
+        var hasJoin = await joinDeviceLobby(
+          this.$route.query.deviceId,
+          localStorage.getItem("token")
+        );
+
         this.$router.push({
           path: `/play?pointId=${this.$route.query.deviceId}`
         });
