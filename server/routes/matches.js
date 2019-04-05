@@ -41,7 +41,7 @@ router.get('/:matchId', auth, (req, res) => {
 router.put('/:id',auth, (req, res) => {
     Match.findById(req.params.id)
         .then(match => {
-            match.duration = 0;
+            match.duration = req.body.duration;
             match.save()
                 .then(match => res.status(200).json({}));
         });
