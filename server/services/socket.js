@@ -4,6 +4,7 @@ var _io = {};
 module.exports = {
    init: (io) => {
       _io = io;
+      _io.origins('*:*');
       io.on('connection', function (socket) {
         socket.on('register', function (data) {
           connectedUsers[data.email] = socket;
