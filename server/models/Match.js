@@ -12,7 +12,13 @@ const MatchSchema = new Schema({
         type: Date,
         required: true,
         default: Date.now()
-    }
+    },
+    duration: {
+        type: Number,
+        required: true,
+        default: 30
+    },
+    
 });
 
 module.exports = Match = mongoose.model('match', MatchSchema);

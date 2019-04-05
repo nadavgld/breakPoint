@@ -48,7 +48,7 @@ router.post('/:id/lobby', auth, (req, res) => {
             device.save()
                 .then(device => {
                     socket.addToRoom(req.user.email, device.id);
-                    res.json(device)
+                    res.json(device) // return only lobby instead of whole device
                 });
         });
 });
