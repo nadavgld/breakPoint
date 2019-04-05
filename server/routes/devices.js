@@ -47,7 +47,7 @@ router.post('/:id/lobby', auth, (req, res) => {
             device.lobby = [...device.lobby, req.user.name];
             device.save()
                 .then(device => {
-                    socket.addToRoom(req.user.email, device.id);
+                    socket.addToRoom(req.user.email, req.user.name, device.id);
                     res.json(device) // return only lobby instead of whole device
                 });
         });
@@ -60,7 +60,7 @@ router.delete('/:id/lobby', auth, (req, res) => {
             device.lobby = device.lobby.filter(name => name !== req.user.name);
             device.save()
                 .then(device => {
-                    socket.removeFromRoom(req.user.email, device.id);
+                    socket.removeFromRoom(req.user.email, req.user.name, device.id);
                     res.status(200)
                 });
         });
