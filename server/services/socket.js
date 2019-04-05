@@ -39,7 +39,7 @@ module.exports = {
     _io.to(roomId).emit('user_left_room', name);
     console.log(`removed ${name} from ${roomId}`)
   },
-  matchStarted: (roomId, matchId) => { }
+  matchStarted: (roomId, matchId) => { 
    _io.to(roomId).emit('match_started', matchId);
-
+  }
 }
