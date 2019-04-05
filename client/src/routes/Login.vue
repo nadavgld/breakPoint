@@ -37,6 +37,7 @@
 <script>
 // @ is an alias to /src
 import { loginUser } from "@/apis/auth.js";
+import { getAllDevices, joinDeviceLobby } from "@/apis/device.js";
 
 export default {
   data() {
@@ -89,6 +90,11 @@ export default {
         this.$socket.emit("register", { email: response.user.email });
 
         if (this.$route.query.deviceId) {
+          var hasJoin = await joinDeviceLobby(
+            this.$route.query.deviceId,
+            localStorage.getItem("token")
+          );
+
           this.$router.push({
             path: `/play?pointId=${this.$route.query.deviceId}`
           });
