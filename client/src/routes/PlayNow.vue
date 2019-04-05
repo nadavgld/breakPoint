@@ -49,7 +49,7 @@ export default {
     user_left_room(user) {
       this.participants = this.participants.filter(p => p !== user);
     },
-    gameStarted(matchId) {
+    match_started(matchId) {
       this.$router.push({ path: `/closeGame?matchId=${matchId}` });
     }
   },

@@ -67,7 +67,7 @@ export default {
         date
       );
 
-      this.$router.push({ path: `/closeGame?matchId=${match._id}` });
+      this.$router.push({ path: `/pick` });
     },
     calculateInterval() {
       var array = [];
