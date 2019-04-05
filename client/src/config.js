@@ -1,3 +1,3 @@
 module.exports = {
-    server_url: 'http://localhost:5000'
+    server_url: 'https://boiling-mesa-96862.herokuapp.com'
 }
