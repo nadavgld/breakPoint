@@ -10,15 +10,16 @@ const MatchSchema = new Schema({
     },
     time: {
         type: Date,
-        required: true,
         default: Date.now()
     },
     duration: {
         type: Number,
-        required: true,
         default: 30
-    }
-    
+    },
+    players: {
+        type: Array,
+        required: true
+    } 
 });
 
 module.exports = Match = mongoose.model('match', MatchSchema);
