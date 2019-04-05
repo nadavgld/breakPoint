@@ -20,7 +20,9 @@
                   <div>
                     <div class="headline">{{point.name}}</div>
                     <div>{{point.description}}</div>
-                    <div class="mt bold">{{point.isFree ? "Is Free!" : "Occupied"}}</div>
+                    <div
+                      class="mt bold"
+                    >{{!point.activeMatchId || point.activeMatchId.length == 0 ? "Is Free!" : "Occupied"}}</div>
                   </div>
                 </v-card-title>
               </v-flex>
@@ -29,10 +31,10 @@
             <v-card-actions class="pa-3">
               Player capacity
               <v-spacer></v-spacer>
-              <div v-for="index in point.minPlayer">
+              <div v-for="index in point.minPlayers">
                 <i class="users fas fa-user"></i>
               </div>
-              <div v-for="index in (point.maxPlayer - point.minPlayer)">
+              <div v-for="index in (point.maxPlayers - point.minPlayers)">
                 <i class="users max-players fas fa-user"></i>
               </div>
             </v-card-actions>
@@ -48,7 +50,7 @@
         <div class="modal-buttons">
           <v-btn
             color="green"
-            :disabled="selectedPoint.isFree === false  "
+            :disabled="selectedPoint.activeMatchId.length > 0"
             class="playnow-button"
             @click="playnow(selectedPoint)"
           >Play Now!</v-btn>
@@ -60,67 +62,47 @@
 </template>
 
 <script>
+import { getUserById } from "@/apis/users.js";
+import { getAllDevices, joinDeviceLobby } from "@/apis/device.js";
+
 // @ is an alias to /src
 
 export default {
   data() {
     return {
       name: "Point Picker",
-      Points: [
-        {
-          id: 1,
-          name: "Sony",
-          description: "Sony fun",
-          area: "A12",
-          minPlayer: 2,
-          maxPlayer: 5,
-          isFree: true
-        },
-        {
-          id: 2,
-          name: "Gym",
-          description: "Gym fun2",
-          area: "A12",
-          minPlayer: 2,
-          maxPlayer: 2,
-          isFree: true
-        },
-        {
-          id: 3,
-          name: "Table Tennis",
-          description: "Sony fun3",
-          area: "A13",
-          minPlayer: 3,
-          maxPlayer: 4,
-          isFree: false
-        },
-        {
-          id: 4,
-          name: "Guitar",
-          description: "Guitar fun3",
-          area: "A22",
-          minPlayer: 1,
-          maxPlayer: 1,
-          isFree: false
-        }
-      ], // {Name, Description, Area, MinPlayer, MaxPlayer, isFree}
+      Points: [],
       PointIcons: {
-        Sony: "fas fa-gamepad",
+        "Sony PlayStation": "fas fa-gamepad",
         Gym: "fas fa-dumbbell",
-        "Table Tennis": "fas fa-table-tennis",
-        Guitar: "fas fa-guitar"
+        "Ping Pong": "fas fa-table-tennis",
+        Guitar: "fas fa-guitar",
+        "Dog Walking": "fas fa-dog"
       },
       PointColors: ["#F69314", "#C40B13", "#621295", "#00BDAA"],
       selectedPoint: undefined,
       showModal: false
     };
   },
-  
-  mounted() {
+
+  async mounted() {
     const token = localStorage.getItem("token");
 
     if (!token) {
       this.$router.push({ path: `/login` });
+
+      return;
+    }
+
+    var devices = await getAllDevices(token);
+    console.log(devices);
+    this.Points = [...devices];
+
+    const userId = localStorage.getItem("userId");
+    var userData = await getUserById(userId, token);
+
+    if (userData) {
+      console.log(userData);
     }
   },
 
@@ -132,26 +114,18 @@ export default {
       return this.PointColors[index % this.PointColors.length];
     },
     pickPoint(event, point, index) {
-      // if (point.isFree === false) {
-      //   var pointElement = document.getElementsByClassName("point-icon")[index];
-      //   pointElement.className += " occupied";
-
-      //   setTimeout(() => {
-      //     pointElement.className = "point-icon";
-      //   }, 2000);
-      // } else {
-      //   this.selectedPoint = point;
-      //   this.showModal = true;
-      // }
-
       this.selectedPoint = point;
       this.showModal = true;
     },
-    playnow(point) {
-      this.$router.push({ path: `/play/?pointId=${this.selectedPoint.id}` });
+    async playnow(point) {
+      var hasJoin = await joinDeviceLobby(point._id, localStorage.getItem('token'))
+
+      this.$router.push({
+        path: `/play?pointId=${this.selectedPoint._id}`
+      });
     },
     book(point) {
-      this.$router.push({ path: `/book?pointId=${this.selectedPoint.id}` });
+      this.$router.push({ path: `/book?pointId=${this.selectedPoint._id}` });
     }
   },
   components: {}
