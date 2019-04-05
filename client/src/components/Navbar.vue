@@ -10,14 +10,24 @@
 </template>
 
 <script>
-// @ is an alias to /src
-
 export default {
+  data() {
+    return {
+      hasToken: false
+    }
+  },
+
+  created() {
+    var self = this;
+
+  },
+
   methods: {
     logout() {
       localStorage.clear();
+      this.hasToken = false;
       this.$router.push({ path: `/login` });
-    }
+    },
   },
   components: {}
 };

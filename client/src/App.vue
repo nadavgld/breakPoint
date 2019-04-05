@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Navbar />
-    <router-view/>
+    <router-view v-on:login="login(hasLogin)"/>
   </div>
 </template>
 
@@ -11,6 +11,12 @@ import Navbar from "@/components/Navbar.vue";
 export default {
   components: {
     Navbar
+  },
+
+  methods: {
+    login(bool){
+      console.log(bool);
+    }
   }
 };
 </script>

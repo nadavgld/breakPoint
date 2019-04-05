@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <img alt="Vue logo" src="../assets/logo.png">
+    <img alt="Vue logo" width="250px" src="../assets/logo.png">
     <v-form ref="form" class="break-form" lazy-validation>
       <div>
         <v-text-field
@@ -13,6 +13,7 @@
       </div>
       <div>
         <v-text-field
+          type="password"
           v-model="password"
           :counter="20"
           label="Password"
@@ -61,6 +62,8 @@ export default {
       if (!response.token) {
         this.err = response.msg;
       } else {
+        this.$emit('login', true);
+
         localStorage.setItem("token", response.token);
         localStorage.setItem("userId", response.user.id);
         localStorage.setItem("email", response.user.email);
