@@ -71,7 +71,6 @@ router.post('/:id/lobby', auth, (req, res) => {
         .then(device => {
             if (device && device.lobby.length + 1 < device.maxPlayers){
                 device.lobby = [...device.lobby, req.user.name];
-                device.lobby = [...new Set(device.lobby)];
                 device.save()
                     .then(device => {
                         socket.addToRoom(req.user.email, req.user.name, device.id);
