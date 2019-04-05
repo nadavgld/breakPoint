@@ -6,6 +6,7 @@ import PointPicker from './routes/PointPicker.vue'
 import Book from './routes/Book.vue'
 import PlayNow from './routes/PlayNow.vue'
 import CloseGame from './routes/CloseGame.vue'
+import scanQR from './routes/scanQR.vue'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/closeGame',
       name: 'CloseGame',
       component: CloseGame
+    },
+    {
+      path: '/scanQR',
+      name: 'scanQR',
+      component: scanQR
     }
   ]
 })
