@@ -18,8 +18,8 @@ router.get('/', (req, res) => {
 // @access Private
 router.post('/', auth, (req, res) => {
     const newMatch = new Match({
-        deviceId: req.deviceId,
-        players: req.players
+        deviceId: req.body.deviceId,
+        players: req.body.players
     });
 
     newMatch.save()
