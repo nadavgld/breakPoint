@@ -35,6 +35,16 @@ router.get('/:matchId', auth, (req, res) => {
         .catch(err => console.log(err));
 });
 
-
+// @route PUT api/matches/:id
+// @desc End a match
+// @access Private
+router.put('/:id',auth, (req, res) => {
+    Match.findById(req.params.id)
+        .then(match => {
+            match.duration = req.body.duration;
+            match.save()
+                .then(match => res.status(200).json({}));
+        });
+});
 
 module.exports = router;
