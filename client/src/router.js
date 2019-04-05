@@ -32,7 +32,7 @@ export default new Router({
       component: Book
     },
     {
-      path: '/play/:pointId',
+      path: '/play',
       name: 'Play',
       component: PlayNow
     },

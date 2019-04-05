@@ -6,7 +6,7 @@ import VueSocketIO from 'vue-socket.io'
 import router from './router'
 
 Vue.use(new VueSocketIO({
-  connection: 'localhost:5555',
+  connection: 'https://boiling-mesa-96862.herokuapp.com',
 }))
 
 Vue.config.productionTip = false
