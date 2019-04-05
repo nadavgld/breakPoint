@@ -8,6 +8,9 @@ const DeviceSchema = new Schema({
         type: String,
         required: true
     },
+    description: {
+        type: String
+    },
     zone: {
         type: Number,
         required: true
@@ -25,9 +28,9 @@ const DeviceSchema = new Schema({
         type: Array,
         default: []
     },
-    isOccupied: {
-        type: Boolean,
-        default: false
+    activeMatchId: {
+        type: String,
+        default: ''
     }
 });
 

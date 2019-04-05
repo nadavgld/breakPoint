@@ -21,6 +21,7 @@ router.get('/', auth, (req, res) => {
 router.post('/', (req, res) => {
     const newDevice = new Device({
         name: req.body.name,
+        description: req.body.description,
         zone: req.body.zone,
         minPlayers: req.body.minPlayers,
         maxPlayers: req.body.maxPlayers
