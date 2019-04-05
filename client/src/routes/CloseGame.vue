@@ -59,6 +59,7 @@ export default {
           that.formatedMinutes = that.getFormatedTime(that.minutes);
         } else {
           clearInterval(x);
+          this.closeMatches()
         }
       }, 1000);
     },
