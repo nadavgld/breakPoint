@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Match = require('../models/Match');
 const auth = require('../middleware/auth');
-
+const socket = require('../services/socket');
 
 // @route GET api/matches
 // @desc Get all matches
@@ -24,7 +24,10 @@ router.post('/', auth, (req, res) => {
     });
 
     newMatch.save()
-        .then(match => res.json(match));
+        .then(match => {
+            socket.matchStarted(req.body.deviceId, match.id)
+            return res.json(match)
+        });
 });
 
 // @route GET api/matches/:matchId
