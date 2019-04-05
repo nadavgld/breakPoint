@@ -7,7 +7,7 @@ const auth = require('../middleware/auth');
 // @route GET api/matches
 // @desc Get all matches
 // @access Public
-router.post('/', (req, res) => {
+router.get('/', (req, res) => {
     Match.find()
         .then(matches => res.json(matches));
 });
