@@ -21,7 +21,7 @@ module.exports = {
         });
       });
    },
-   addToRoom: (email, name roomId) => {
+   addToRoom: (email, name, roomId) => {
     console.log(`adding ${email} to room ${roomId}`);
     console.log('connected users', connectedUsers);
     connectedUsers[email].join(roomId);
