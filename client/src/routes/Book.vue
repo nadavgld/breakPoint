@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { startGame } from "@/apis/match.js";
+import { startGame, getAllMatches } from "@/apis/match.js";
 
 export default {
   name: "app",
@@ -33,16 +33,20 @@ export default {
     return {
       minHour: 9,
       maxHour: 23,
-      intervalTime: 0.5
+      intervalTime: 0.5,
+      allMatches: []
     };
   },
 
-  mounted() {
+  async mounted() {
     const token = localStorage.getItem("token");
 
     if (!token) {
       this.$router.push({ path: `/login` });
     }
+
+    var matches = await getAllMatches(token);
+    this.allMatches = matches;
   },
 
   methods: {
@@ -58,7 +62,7 @@ export default {
 
       const match = await startGame(
         deviceId,
-        [localStorage.getItem('user_name')],
+        [localStorage.getItem("user_name")],
         localStorage.getItem("token"),
         date
       );
@@ -96,6 +100,15 @@ export default {
       return newArray;
     }
   }
+};
+
+const isToday = someDate => {
+  const today = new Date();
+  return (
+    someDate.getDate() == today.getDate() &&
+    someDate.getMonth() == today.getMonth() &&
+    someDate.getFullYear() == today.getFullYear()
+  );
 };
 </script>
 

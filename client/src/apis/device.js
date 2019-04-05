@@ -13,6 +13,7 @@ export const getAllDevices = async (token) => {
     console.error(error);
   }
 }
+
 export const getDeviceById = async (id, token) => {
   try {
     const response = await axios.get(config.server_url + `/api/devices/${id}`, {

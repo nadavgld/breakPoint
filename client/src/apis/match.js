@@ -54,3 +54,19 @@ export const getmatchById = async (id, token) => {
     return undefined;
   }
 }
+
+export const getAllMatches = async (token) => {
+  try {
+    const response = await axios.get(config.server_url + `/api/matches/`, {
+      headers: {
+        "x-auth-token": token
+      }
+    });
+    return response.data;
+
+  } catch (error) {
+    console.error(error);
+
+    return undefined;
+  }
+}
