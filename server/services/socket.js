@@ -21,17 +21,17 @@ module.exports = {
         });
       });
    },
-   addToRoom: (email, roomId) => {
+   addToRoom: (email, name roomId) => {
     console.log(`adding ${email} to room ${roomId}`);
     console.log('connected users', connectedUsers);
     connectedUsers[email].join(roomId);
-    _io.to(roomId).emit('new_user_in_room', email);
+    _io.to(roomId).emit('new_user_in_room', name);
    },
-   removeFromRoom: (email, roomId) => {
-    console.log(`removing ${email} from room ${roomId}`);
+   removeFromRoom: (email, name, roomId) => {
+    console.log(`removing ${name} from room ${roomId}`);
     console.log('connected users', connectedUsers);
     connectedUsers[email].leave(roomId);
-    _io.to(roomId).emit('user_left_room', email);
+    _io.to(roomId).emit('user_left_room', name);
    }
 
 }
