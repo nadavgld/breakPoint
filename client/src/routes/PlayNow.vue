@@ -41,10 +41,10 @@ export default {
   },
 
   sockets: {
-    new_user_in_room: newUser => {
+    new_user_in_room(newUser) {
       this.participants.push(newUser);
     },
-    user_left_room: user => {
+    user_left_room(user) {
       this.participants = this.participants.filter(p => p !== user);
     }
   },

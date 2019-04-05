@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <div>{{$route.query.pointId}}</div>
     <div v-for="index in calculateInterval()" :key="index" class="point">
       <v-flex xs12>
         <v-card class="black--text">
