@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Device = require('../models/Device');
+const Match = require('../models/Match');
 const auth = require('../middleware/auth');
 const socket = require('../services/socket');
 
@@ -31,6 +32,23 @@ router.post('/', (req, res) => {
         .then(device => res.json(device));
 });
 
+
+// @route GET api/:deviceId/matches
+// @desc Get One Match By Device ID
+// @access Private
+router.get('/:deviceId/matches', auth, (req, res) => {
+    Match.find({deviceId: req.params.deviceId}, (err, matches) => {
+        if (err) {
+            console.log(err);
+            res.status(400).json({msg: 'Error retrieving matches by device ID'});
+        }
+        if (!matches || matches.length === 0){
+            res.json({msg: 'No matches are played on that device.'})
+        }
+        res.json(match);
+    });
+});
+
 // @route GET api/devices/:id
 // @desc Get One Device
 // @access Private
@@ -39,6 +57,13 @@ router.get('/:id', auth, (req, res) => {
         .then(device => res.json(device))
         .catch(err => console.log(err));
 });
+
+// // @route GET api/devices/:id
+// // @desc Get One Device
+// // @access Private
+// router.get('/:id', auth, (req, res) => {
+
+// });
 
 // route to add user to device lobby
 router.post('/:id/lobby', auth, (req, res) => {

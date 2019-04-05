@@ -35,20 +35,6 @@ router.get('/:matchId', auth, (req, res) => {
         .catch(err => console.log(err));
 });
 
-// @route GET api/matches/:deviceId
-// @desc Get One Match By Device ID
-// @access Private
-router.get('/:deviceId', auth, (req, res) => {
-    Match.find({deviceId: req.params.deviceId}, (err, matches) => {
-        if (err) {
-            console.log(err);
-            res.status(400).json({msg: 'Error retrieving matches by device ID'});
-        }
-        if (!matches || matches.length === 0){
-            res.json({msg: 'No matches are played on that device.'})
-        }
-        res.json(match);
-    });
-});
+
 
 module.exports = router;
