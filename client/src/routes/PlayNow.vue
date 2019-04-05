@@ -4,10 +4,11 @@
       <div v-for="(user, index) in participants" :key="user.username" class="user">
         <i v-if="index > 0" class="users fas fa-user"></i>
         <i v-if="index ==0" class="users fas fa-user-secret"></i>
-        {{user.username}}
+        {{user}}
       </div>
     </div>
     <v-btn
+      :disabled="this.participants.length < this.currentDevice.minPlayers"
       v-if="showStartGame"
       class="mt start-game-button"
       color="blue"
@@ -17,7 +18,11 @@
 </template>
 
 <script>
-import { getAllDevices, joinDeviceLobby, getDeviceById } from "@/apis/device.js";
+import {
+  getAllDevices,
+  joinDeviceLobby,
+  getDeviceById
+} from "@/apis/device.js";
 
 export default {
   data() {
@@ -25,16 +30,13 @@ export default {
       name: "playNow",
       currentDevice: undefined,
       deviceId: undefined,
-      participants: [
-        { username: "gal", userId: "i" },
-        { username: "Inbar", userId: "ii" }
-      ]
+      participants: []
     };
   },
 
   async mounted() {
     const token = localStorage.getItem("token");
-    this.deviceId = $route.query.pointId;
+    this.deviceId = this.$route.query.pointId;
 
     if (!token) {
       this.$router.push({ path: `/login` });
@@ -43,14 +45,23 @@ export default {
     }
 
     var device = await getDeviceById(this.deviceId, token);
-    console.log(device);
+
+    this.currentDevice = device;
+    this.participants = [...device.lobby];
+  },
+
+  methods: {
+    startGame() {}
   },
 
   computed: {
     showStartGame: function() {
-      var currentUserId = localStorage.getItem("userId");
-      //return this.participants.filter(e => e.userId === currentUserId).length > 0;
-      return true;
+      var currentUser = localStorage.getItem("user_name");
+
+      return (
+        this.participants[0] === currentUser &&
+        this.participants.length >= this.currentDevice.minPlayers
+      );
     }
   },
   components: {}

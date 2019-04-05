@@ -50,6 +50,14 @@ export default {
     const token = localStorage.getItem("token");
 
     if (token) {
+      if (this.$route.query.deviceId) {
+        this.$router.push({
+          path: `/play?pointId=${this.$route.query.deviceId}`
+        });
+
+        return;
+      }
+      
       this.$router.push({ path: `/pick` });
     }
   },
@@ -62,13 +70,22 @@ export default {
       if (!response.token) {
         this.err = response.msg;
       } else {
-        this.$emit('login', true);
+        this.$emit("login", true);
 
         localStorage.setItem("token", response.token);
         localStorage.setItem("userId", response.user.id);
         localStorage.setItem("email", response.user.email);
         localStorage.setItem("user_name", response.user.name);
 
+        this.$socket.emit("register", { email: response.user.email });
+
+        if (this.$route.query.deviceId) {
+          this.$router.push({
+            path: `/play?pointId=${this.$route.query.deviceId}`
+          });
+
+          return;
+        }
         this.$router.push({ path: `/pick` });
       }
     }

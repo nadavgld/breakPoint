@@ -1,10 +1,13 @@
 <template>
   <v-toolbar>
-    <v-toolbar-side-icon></v-toolbar-side-icon>
+    <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
     <v-toolbar-title>Break Point</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
-      <v-btn flat @click="logout()">Logout</v-btn>
+      <v-btn flat @click="logout()">
+        Logout
+        <i class="fas fa-sign-out-alt" style="margin-left: 5px; line-height: 10px;"></i>
+        </v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Navbar />
-    <router-view v-on:login="login(hasLogin)"/>
+    <router-view/>
   </div>
 </template>
 
@@ -14,9 +14,7 @@ export default {
   },
 
   methods: {
-    login(bool){
-      console.log(bool);
-    }
+
   }
 };
 </script>
