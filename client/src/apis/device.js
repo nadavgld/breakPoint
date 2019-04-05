@@ -45,7 +45,7 @@ export const joinDeviceLobby = async (id, token) => {
 
 export const cancelLobbyWaiting = async (id, token) => {
   try {
-    const response = await axios.delete(config.server_url + `/api/devices/${id}/lobby`, {} , {
+    const response = await axios.delete(config.server_url + `/api/devices/${id}/lobby`, {
       headers: {
         "x-auth-token": token
       }

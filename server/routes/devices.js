@@ -55,13 +55,16 @@ router.post('/:id/lobby', auth, (req, res) => {
 
 // route to remove user from device lobby
 router.delete('/:id/lobby', auth, (req, res) => {
+    console.log('deleting from lobby');
     Device.findById(req.params.id)
         .then(device => {
+            console.log('device.lobby', device.lobby)
             device.lobby = device.lobby.filter(name => name !== req.user.name);
+        console.log('device.lobby after', device.lobby)
             device.save()
                 .then(device => {
                     socket.removeFromRoom(req.user.email, req.user.name, device.id);
-                    res.status(200)
+                    res.status(200).json({});
                 });
         });
 });
