@@ -44,12 +44,17 @@ router.get('/:id', auth, (req, res) => {
 router.post('/:id/lobby', auth, (req, res) => {
     Device.findById(req.params.id)
         .then(device => {
-            device.lobby = [...device.lobby, req.user.name];
-            device.save()
-                .then(device => {
-                    socket.addToRoom(req.user.email, req.user.name, device.id);
-                    res.json(device) // return only lobby instead of whole device
-                });
+            if (device && device.lobby.length + 1 < device.maxPlayers){
+                device.lobby = [...device.lobby, req.user.name];
+                device.save()
+                    .then(device => {
+                        socket.addToRoom(req.user.email, req.user.name, device.id);
+                        res.json(device) // return only lobby instead of whole device
+                    });
+            }
+            else {
+                res.status(204).json({ msg: 'User already inside lobby'});
+            }
         });
 });
 

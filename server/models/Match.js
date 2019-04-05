@@ -17,7 +17,7 @@ const MatchSchema = new Schema({
         type: Number,
         required: true,
         default: 30
-    },
+    }
     
 });
 

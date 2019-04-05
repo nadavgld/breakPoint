@@ -9,7 +9,7 @@ const socket = require('../services/socket');
 // @desc Create a match
 // @access Public
 router.post('/', (req, res) => {
-    const newDevice = new Device({
+    const newMatch = new Match({
         name: req.body.name,
         description: req.body.description,
         zone: req.body.zone,
