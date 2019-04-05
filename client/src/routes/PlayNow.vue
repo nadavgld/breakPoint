@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="play-container">
-      <h1>Currently waiting for a match..</h1>
+      <h1>Currently waiting for a match to..{{currentDevice.name}}</h1>
       <div v-for="(user, index) in participants" :key="user.username" class="user">
         <i v-if="index > 0" class="users fas fa-user"></i>
         <i v-if="index ==0" class="users fas fa-user-secret"></i>
