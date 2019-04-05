@@ -69,8 +69,8 @@ router.post('/', (req, res) => {
 // @desc Get One Device
 // @access Public
 router.get('/:id', (req, res) => {
-    Device.findById(req.params.id)
-        .then(device => res.json(device))
+    User.findById(req.params.id)
+        .then(user => res.json(user))
         .catch(err => console.log(err));
 });
 
