@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="play-container">   
-    <video id="preview"></video>
-  </div>
+    <div class="play-container">
+      <video id="preview"></video>
+    </div>
   </div>
 </template>
 
@@ -34,26 +34,30 @@ export default {
   },
 
   async mounted() {
-    let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-      scanner.addListener('scan', function (content) {
-        alert(content);
-      });
-      Instascan.Camera.getCameras().then(function (cameras) {
-        if (cameras.length > 0) {
+    let scanner = new Instascan.Scanner({
+      video: document.getElementById("preview")
+    });
+    scanner.addListener("scan", function(content) {
+      window.location.href = content;
+    });
+    Instascan.Camera.getCameras()
+      .then(function(cameras) {
+        if (cameras.length > 1) {
+          scanner.start(cameras[1]);
+        } else if (cameras.length > 0) {
           scanner.start(cameras[0]);
         } else {
-          console.error('No cameras found.');
+          console.error("No cameras found.");
         }
-      }).catch(function (e) {
+      })
+      .catch(function(e) {
         console.error(e);
       });
   },
 
   methods: {},
   computed: {},
-  components: {},
-
-
+  components: {}
 };
 </script>
 

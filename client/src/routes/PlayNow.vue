@@ -30,6 +30,8 @@ import {
   cancelLobbyWaiting
 } from "@/apis/device.js";
 
+import { startGame } from "@/apis/match.js";
+
 export default {
   data() {
     return {
@@ -66,7 +68,15 @@ export default {
   },
 
   methods: {
-    startGame() {},
+    async startGame() {
+      const match = await startGame(
+        this.deviceId,
+        this.participants,
+        localStorage.getItem("token")
+      );
+
+      this.$router.push({ path: `/closeGame?matchId=${match._id}` });
+    },
 
     async cancelGame() {
       await cancelLobbyWaiting(this.deviceId, localStorage.getItem("token"));
@@ -99,7 +109,7 @@ h1 {
 }
 
 .user {
-  font-size: 24x;
+  font-size: 24px;
   padding-top: 15px;
   text-align: center;
   /* padding-left: 42vw; */

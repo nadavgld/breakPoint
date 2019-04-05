@@ -1,19 +1,19 @@
 <template>
   <div class="container">
-    <div v-for="index in calculateInterval()" :key="index" class="point">
-      <v-flex xs12>
+    <div v-for="timeInterval in calculateInterval()" :key="timeInterval.time" class="point">
+      <v-flex xs12 :class="{'notFree':!timeInterval.isFree}">
         <v-card class="black--text">
           <v-layout>
             <v-flex xs5>
               <div class="point-icon">
                 <i class="far fa-clock"></i>
-                {{index}}
+                {{timeInterval.time}}
               </div>
             </v-flex>
             <v-flex xs7>
               <v-card-title primary-title>
                 <div class="buttons">
-                  <v-btn> Book </v-btn>
+                  <v-btn :disabled="!timeInterval.isFree">Book</v-btn>
                 </div>
               </v-card-title>
             </v-flex>
@@ -64,7 +64,15 @@ export default {
         }
       });
 
-      return array;
+      var newArray = [];
+      for (var i = 0; i < array.length; i++) {
+        newArray.push({
+          time: array[i],
+          isFree: Math.random() > 0.5
+        });
+      }
+
+      return newArray;
     }
   }
 };
@@ -90,18 +98,20 @@ export default {
   font-size: 24px;
 }
 
-.buttons{
+.notFree {
+  background: rgb(175, 14, 14) !important;
+}
+
+.buttons {
   display: none;
 }
 
-.point:hover .buttons{
+.point:hover .buttons {
   display: block;
 }
 
-
-.v-card__title--primary{
+.v-card__title--primary {
   padding: 6px !important;
   padding-left: 25px;
 }
-
 </style>

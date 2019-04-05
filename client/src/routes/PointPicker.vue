@@ -196,6 +196,11 @@ export default {
   text-align: center;
   height: 100%;
 }
+
+i{
+  text-shadow: 1px 1px 1px #333;
+}
+
 .point {
   max-width: 400px;
   padding: 5px;

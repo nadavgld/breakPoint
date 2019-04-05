@@ -29,7 +29,7 @@ export const getDeviceById = async (id, token) => {
 
 export const joinDeviceLobby = async (id, token) => {
   try {
-    const response = await axios.post(config.server_url + `/api/devices/${id}/lobby`, {} , {
+    const response = await axios.post(config.server_url + `/api/devices/${id}/lobby`, {}, {
       headers: {
         "x-auth-token": token
       }
