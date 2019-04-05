@@ -8,6 +8,9 @@ const DeviceSchema = new Schema({
         type: String,
         required: true
     },
+    description: {
+        type: String
+    },
     zone: {
         type: Number,
         required: true
@@ -20,6 +23,14 @@ const DeviceSchema = new Schema({
     maxPlayers: {
         type: Number,
         required: true
+    },
+    lobby: {
+        type: Array,
+        default: []
+    },
+    activeMatchId: {
+        type: String,
+        default: ''
     }
 });
 
