@@ -24,8 +24,8 @@
       </div>
       <v-btn
         :disabled="!email || !password"
-        class="mt login-button"
-        color="red"
+        class="mt login-button white--text"
+        color="#E30921"
         @click="login"
       >Login</v-btn>
     </v-form>
@@ -57,7 +57,7 @@ export default {
 
         return;
       }
-      
+
       this.$router.push({ path: `/pick` });
     }
   },

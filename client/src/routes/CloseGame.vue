@@ -1,7 +1,7 @@
 <template>
   <div class="close-game-container">
       <div class="timer">{{formatedMinutes}}:{{formatedSeconds}} </div>
-      <v-btn class="mt close-game-button" color="blue" @click="login">Close Game</v-btn>
+      <v-btn class="white--text mt close-game-button" color="#E30921" @click="">Close Game</v-btn>
   </div>
 </template>
 
