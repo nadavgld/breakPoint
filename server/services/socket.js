@@ -19,11 +19,11 @@ module.exports = {
             if (connectedUsers[user].id == socket.id) {
               delete connectedUsers[user];
             }
-            Device.findById(req.params.id)
-            .then(device => {
-                device.lobby = device.lobby.filter(name => name !== req.user.name);
-                device.save();
-            });
+            // Device.findById(req.params.id)
+            // .then(device => {
+            //     device.lobby = device.lobby.filter(name => name !== req.user.name);
+            //     device.save();
+            // });
           });
         });
       });
