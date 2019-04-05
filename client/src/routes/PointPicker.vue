@@ -94,6 +94,8 @@ export default {
       return;
     }
 
+    this.$socket.emit("register", { email: localStorage.getItem('email') });
+
     var devices = await getAllDevices(token);
     console.log(devices);
     this.Points = [...devices];
@@ -118,7 +120,10 @@ export default {
       this.showModal = true;
     },
     async playnow(point) {
-      var hasJoin = await joinDeviceLobby(point._id, localStorage.getItem('token'))
+      var hasJoin = await joinDeviceLobby(
+        point._id,
+        localStorage.getItem("token")
+      );
 
       this.$router.push({
         path: `/play?pointId=${this.selectedPoint._id}`
@@ -202,7 +207,7 @@ export default {
 }
 .points-container {
   margin: auto;
-  height: 100vh;
+  height: 100%;
   padding: 15px 0;
 }
 

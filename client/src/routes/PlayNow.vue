@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="play-container">
+      <h1>Currently waiting for a match..</h1>
       <div v-for="(user, index) in participants" :key="user.username" class="user">
         <i v-if="index > 0" class="users fas fa-user"></i>
         <i v-if="index ==0" class="users fas fa-user-secret"></i>
@@ -89,10 +90,19 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+  margin: 5px 0;
+  color: crimson;
+  font-size: 25px;
+  font-family: inherit;
+  letter-spacing: 1px;
+}
+
 .user {
-  font-size: 32px;
-  padding-top: 10px;
-  text-align: left;
+  font-size: 24x;
+  padding-top: 15px;
+  text-align: center;
+  /* padding-left: 42vw; */
 }
 
 .buttons {
@@ -107,16 +117,39 @@ export default {
 
 .play-container {
   text-align: center;
+  width: 100%;
   position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  text-align: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
-  top: 160px;
+  top: 75px;
   left: 50%;
-  transform: translate(-50%, 0%);
+  -webkit-transform: translate(-50%, 0%);
   text-transform: capitalize;
   max-height: calc(100% - 150px);
+  overflow: hidden;
+  transform-origin: bottom;
 }
 .start-game-button {
   width: 150px;
+}
+
+@media only screen and (max-width: 500px) {
+  .start-game-button {
+    width: 100px;
+    font-size: 12px;
+  }
+
+  .user {
+    font-size: 32px;
+    padding-top: 10px;
+    text-align: left;
+    padding-left: 10vw;
+  }
 }
 </style>

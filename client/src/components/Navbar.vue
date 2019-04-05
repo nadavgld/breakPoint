@@ -3,7 +3,7 @@
     <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
     <v-toolbar-title>Break Point</v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-toolbar-items class="hidden-sm-and-down">
+    <v-toolbar-items class="">
       <!-- <v-btn flat @click="moveToDevices()">
         Devices
         <i class="fas fa-tablet-alt" style="margin-left: 5px; line-height: 10px;"></i>
